@@ -1,33 +1,36 @@
 from flask import render_template, flash, redirect, url_for
-from app import app
-from app.forms import LoginForm
+from app import app, db
+from app.forms import AddCaseForm, OrderCheckForm
+from app.models import Patient
 
-@app.route('/')
-@app.route('/index')
-def index():
-    user = {'username': 'Kosta'}
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }, 
-        {
-            'author': {'username': 'Kosta'},
-            'body': 'Hello!!'
-        }
-    ]
-    return render_template('index.html', title='Home', user=user, posts=posts)
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/add_case', methods=['GET', 'POST'])
+def add_case():
+    add_form = AddCaseForm()
+    check_form = OrderCheckForm()
+    if check_form.check_order_id.data and check_form.validate_on_submit():
+        check_form = OrderCheckForm(**{'order_id': check_form.order_id.data})
+        #сгенерируй id
+        patient = Patient()
+        db.session.add(patient)
+        db.session.flush()  # в этот момент происходит автогенерация id
+        add_form.patient_id.data = f'BIGRP-{patient.id:0>5}'
+        flash('Patient ID is generated')
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
-        return redirect(url_for('index'))
-    return render_template('login.html', title='Sign In', form=form)
+    if add_form.submit.data and add_form.validate_on_submit(): # если все поля заполнены, то добавь в базу
+        patient = Patient(
+            patient=add_form.patient_id.data,
+            sex=add_form.sex.data,
+        )
+        db.session.add(patient)
+        db.session.commit()
+        flash('Patient {} successfully added'.format(add_form.patient_id.data))
 
+    return render_template(
+        'add_case.html',
+        add_form=add_form,
+        check_form=check_form,
+    )
+
+#@app.route('/add_case_to_patient')
+#def
