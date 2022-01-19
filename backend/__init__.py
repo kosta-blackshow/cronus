@@ -6,10 +6,10 @@ from flask_bootstrap import Bootstrap
 
 from backend.models import Base
 
-app = Flask(__name__)
-app.config.from_object(Config)
-db = SQLAlchemy(app, model_class=Base)
-migrate = Migrate(app, db)
-bootstrap = Bootstrap(app)
+server = Flask(__name__)
+server.config.from_object(Config)
+db = SQLAlchemy(server, model_class=Base)
+migrate = Migrate(server, db)
+bootstrap = Bootstrap(server)
 
 from backend import routes, models

@@ -1,10 +1,10 @@
 from flask import render_template, flash, redirect, url_for
-from backend import app, db
+from backend import server, db
 from backend.forms import AddCaseForm, OrderCheckForm
 from backend.models import Patient
 
 
-@app.route('/', methods=['GET'])
+@server.route('/', methods=['GET'])
 def home():
     form = AddCaseForm()
     import_form = OrderCheckForm()
@@ -16,7 +16,7 @@ def home():
         case_title='Firstly check order',
     )
 
-@app.route('/import_order', methods=['POST'])
+@server.route('/import_order', methods=['POST'])
 def import_order():
     form = AddCaseForm()
     import_form = OrderCheckForm()
@@ -48,7 +48,7 @@ def import_order():
     )
 
 
-@app.route('/add_case', methods=['GET', 'POST'])
+@server.route('/add_case', methods=['GET', 'POST'])
 def add_case():
     form = AddCaseForm()
     import_form = OrderCheckForm()

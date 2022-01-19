@@ -1,10 +1,11 @@
-from backend import app, db
+from backend import server, db
 from backend.models import Patient
 
-@app.shell_context_processor
+
+@server.shell_context_processor
 def make_shell_context():
     return dict(
-        app=app,
+        server=server,
         db=db,
         Patient=Patient
     )
