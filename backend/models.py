@@ -22,3 +22,4 @@ class Patient(Base):
 
     def __repr__(self):
         return '<Patient {}>'.format(self.patient)
+
