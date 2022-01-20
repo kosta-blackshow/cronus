@@ -36,7 +36,7 @@ def import_order():
         patient = Patient()
         db.session.add(patient)
         db.session.flush()  # в этот момент происходит автогенерация id
-        form.patient_id.data = f'BIGRP-{patient.id:0>5}'
+        form.patient_id.data = f'CRONP-{patient.id:0>5}'
         flash('Patient ID is generated')
 
     return render_template(
@@ -44,7 +44,7 @@ def import_order():
         form=form,
         import_form=import_form,
         order_title='Order ID',
-        case_title='Add case to Chronus database',
+        case_title='Add case to Cronus database',
     )
 
 
@@ -66,5 +66,5 @@ def add_case():
         form=form,
         import_form=import_form,
         order_title='Order ID',
-        case_title='Add case to Chronus database',
+        case_title='Add case to Cronus database',
     )

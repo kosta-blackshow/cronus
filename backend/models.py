@@ -1,5 +1,8 @@
-# The models are designed according to the classic SQLAlchemy pattern
-# so that they can be used outside the application if needed
+"""
+The models are designed according to the classic SQLAlchemy pattern
+so that they can be used outside the application if needed
+"""
+
 from sqlalchemy.orm import relationship
 from sqlalchemy import (
     Column,
