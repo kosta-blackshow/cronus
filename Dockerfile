@@ -5,12 +5,12 @@ RUN useradd cronus
 WORKDIR /home/cronus
 
 COPY requirements.txt requirements.txt
+COPY backend backend
+COPY migrations migrations
+
 RUN python -m venv venv
 RUN venv/bin/pip install -r requirements.txt
 RUN venv/bin/pip install gunicorn
-
-COPY backend backend
-COPY migrations migrations
 RUN chmod a+x wait-for-postgres.sh
 
 ENV FLASK_APP backend/cronus.py
