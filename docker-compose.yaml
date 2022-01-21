@@ -6,8 +6,6 @@ services:
     restart: always
     volumes:
       - db-data:/var/lib/postgresql/data
-    networks:
-      - cronet
     environment:
       POSTGRES_USER: test
       POSTGRES_PASSWORD: test
@@ -32,5 +30,3 @@ services:
       SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://test:test@db/test
     ports:
       - 5001:5000
-  networks:
-    - cronet
