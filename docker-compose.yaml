@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.4'
 
 services:
   db:
@@ -19,8 +19,7 @@ services:
   backend:
     build: .
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     restart: always
     environment:
       SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://test:test@db/test
