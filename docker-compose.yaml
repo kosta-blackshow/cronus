@@ -22,8 +22,6 @@ services:
       db:
         condition: service_healthy
     restart: always
-    volumes:
-      - ./migrations:/usr/src/app/migrations
     environment:
       SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://test:test@db/test
     ports:
