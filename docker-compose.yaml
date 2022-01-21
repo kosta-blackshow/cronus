@@ -5,13 +5,13 @@ services:
     image: postgres:14.0-alpine
     restart: always
     environment:
-      POSTGRES_USER: test
-      POSTGRES_PASSWORD: test
-      POSTGRES_DB: test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: CRON
     ports:
       - "5432:5432"
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready" ]
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -23,6 +23,6 @@ services:
         condition: service_healthy
     restart: always
     environment:
-      DATABASE_URL: postgresql+psycopg2://test:test@db/test
+      DATABASE_URL: postgresql+psycopg2://postgres:password@db:5432/CRON
     ports:
       - "5001:5000"
