@@ -5,6 +5,7 @@ RUN useradd cronus
 WORKDIR /home/cronus
 
 COPY requirements.txt requirements.txt
+COPY wait-for-postgres.sh wait-for-postgres.sh
 COPY backend backend
 COPY migrations migrations
 
