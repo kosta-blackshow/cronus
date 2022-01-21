@@ -23,6 +23,6 @@ services:
         condition: service_healthy
     restart: always
     environment:
-      SQLALCHEMY_DATABASE_URI: postgresql+psycopg2://test:test@db/test
+      DATABASE_URL: postgresql+psycopg2://test:test@db/test
     ports:
       - "5001:5000"
