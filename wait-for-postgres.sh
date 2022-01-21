@@ -3,12 +3,13 @@
 
 set -e
 
-until PGPASSWORD=$POSTGRES_PASSWORD psql -h "db" -U "postgres" -c '\q'; do
+until pg_isready --username=postgres --host=postgres; do
   >&2 echo "Postgres is unavailable - sleeping"
   sleep 1
 done
 
 >&2 echo "Postgres is up - executing command"
+psql --username=postgres --host=postgres --list
 
 . venv/bin/activate
 flask db upgrade
