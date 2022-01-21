@@ -9,7 +9,7 @@ def home():
     form = AddCaseForm()
     import_form = OrderCheckForm()
     return render_template(
-        'main.html',
+        'add_case.html',
         form=form,
         import_form=import_form,
         order_title='Check Order ID',
@@ -40,7 +40,7 @@ def import_order():
         flash('Patient ID is generated')
 
     return render_template(
-        'main.html',
+        'add_case.html',
         form=form,
         import_form=import_form,
         order_title='Order ID',
@@ -62,7 +62,7 @@ def add_case():
         flash('Patient {} successfully added'.format(form.patient_id.data))
 
     return render_template(
-        'main.html',
+        'add_case.html',
         form=form,
         import_form=import_form,
         order_title='Order ID',
