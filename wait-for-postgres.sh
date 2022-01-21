@@ -1,12 +1,14 @@
-#!/bin/bash
-# this script is used to boot a Docker container
-source venv/bin/activate
-while true; do
-    flask db upgrade
-    if [[ "$?" == "0" ]]; then
-        break
-    fi
-    echo Deploy command failed, retrying in 5 secs...
-    sleep 5
+#!/bin/sh
+# wait-for-postgres.sh
+
+set -e
+
+until PGPASSWORD=$POSTGRES_PASSWORD psql -h "test" -U "postgres" -c '\q'; do
+  >&2 echo "Postgres is unavailable - sleeping"
+  sleep 1
 done
+
+>&2 echo "Postgres is up - executing command"
+
+. venv/bin/activate
 exec gunicorn -b :5000 --access-logfile - --error-logfile - backend:server
