@@ -13,4 +13,5 @@
 
 . venv/bin/activate
 flask db upgrade
-exec gunicorn -b :5000 --access-logfile - --error-logfile - backend:server
+flask run
+#exec gunicorn -b :5000 --access-logfile - --error-logfile - backend:server
