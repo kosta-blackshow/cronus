@@ -13,4 +13,4 @@
 
 . venv/bin/activate
 flask db upgrade
-exec gunicorn -w 4 -k uvicorn.workers.UvicornWorker --access-logfile - --error-logfile - -b :5000 backend:server --timeout 300
+exec gunicorn -w 2 -k uvicorn.workers.UvicornWorker --access-logfile - --error-logfile - -b :5000 backend:server --timeout 300
