@@ -39,7 +39,7 @@ def import_order():
         form.patient_id.data = f'CRONP-{patient.id:0>5}'
         db.session.rollback()
         db.session.close()
-        flash('Patient ID is generated')
+        flash(f'Patient ID is generated: {form.patient_id.data}')
 
     return render_template(
         'add_case.html',
