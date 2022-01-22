@@ -37,6 +37,8 @@ def import_order():
         db.session.add(patient)
         db.session.flush()  # в этот момент происходит автогенерация id
         form.patient_id.data = f'CRONP-{patient.id:0>5}'
+        db.session.rollback()
+        db.session.close()
         flash('Patient ID is generated')
 
     return render_template(
@@ -59,6 +61,7 @@ def add_case():
         )
         db.session.add(patient)
         db.session.commit()
+        db.session.close()
         flash('Patient {} successfully added'.format(form.patient_id.data))
 
     return render_template(
