@@ -50,7 +50,7 @@ def import_order():
     )
 
 
-@server.route('/add_case', methods=['GET', 'POST'])
+@server.route('/add_case', methods=['POST'])
 def add_case():
     form = AddCaseForm()
     import_form = OrderCheckForm()
