@@ -8,7 +8,7 @@ from backend.models import Base
 
 server = Flask(__name__)
 server.config.from_object(Config)
-db = SQLAlchemy(server, model_class=Base)
+db = SQLAlchemy(server, model_class=Base, session_options={'autocommit': False})
 migrate = Migrate(server, db)
 bootstrap = Bootstrap(server)
 
