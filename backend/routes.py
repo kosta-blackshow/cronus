@@ -33,7 +33,11 @@ def import_order():
         #       - перенаправить на начальную страницу
 
         #сгенерируй id
-        last_id = Patient.query.order_by(-Patient.id).first().id
+        last_patient = Patient.query.order_by(-Patient.id).first()
+        if last_patient is None:
+            last_id = 1
+        else:
+            last_id = last_patient.id
         form.patient_id.data = f'CRONP-{last_id+1:0>5}'
         flash(f'Patient ID is generated: {form.patient_id.data}')
 
