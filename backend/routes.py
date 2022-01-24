@@ -33,12 +33,8 @@ def import_order():
         #       - перенаправить на начальную страницу
 
         #сгенерируй id
-        patient = Patient()
-        db.session.add(patient)
-        db.session.flush()  # в этот момент происходит автогенерация id
-        form.patient_id.data = f'CRONP-{patient.id:0>5}'
-        db.session.rollback()
-        db.session.close()
+        last_id = Patient.query.order_by(-Patient.id).first().id
+        form.patient_id.data = f'CRONP-{last_id+1:0>5}'
         flash(f'Patient ID is generated: {form.patient_id.data}')
 
     return render_template(
