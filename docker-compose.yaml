@@ -24,5 +24,6 @@ services:
     restart: always
     environment:
       DATABASE_URL: postgresql://postgres:password@db:5432/CRON
+      SQLALCHEMY_ECHO: True
     ports:
       - "5001:5000"
