@@ -23,6 +23,6 @@ services:
         condition: service_healthy
     restart: always
     environment:
-      DATABASE_URL: postgresql+psycopg2://postgres:password@db:5432/CRON
+      DATABASE_URL: postgresql://postgres:password@db:5432/CRON
     ports:
       - "5001:5000"
