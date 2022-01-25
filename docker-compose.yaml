@@ -33,4 +33,4 @@ services:
       - "5001:5000"
     command: >
       sh -c "flask db upgrade &&
-             gunicorn -w 2 --access-logfile - --error-logfile - -b :5000 backend:server --timeout 300""
+             gunicorn -w 2 --access-logfile - --error-logfile - -b :5000 backend:server --timeout 300"
