@@ -10,6 +10,7 @@ services:
       POSTGRES_DB: CRON
     ports:
       - "5432:5432"
+    # check whether postgres is ready to receive commands
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -20,6 +21,9 @@ services:
     build: .
     depends_on:
       db:
+        # container will be started only if postgres is ready
+        # 'service_healthy' condition is available in docker-compose
+        # under versions 2.x and >3.7
         condition: service_healthy
     restart: always
     environment:
@@ -27,3 +31,6 @@ services:
       SQLALCHEMY_ECHO: "True"
     ports:
       - "5001:5000"
+    command: >
+      sh -c "flask db upgrade &&
+             gunicorn -w 2 --access-logfile - --error-logfile - -b :5000 backend:server --timeout 300""

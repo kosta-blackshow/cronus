@@ -32,10 +32,10 @@ def import_order():
         # иначе - вызвать ошибку, что фалов нет на s3
         #       - перенаправить на начальную страницу
 
-        #сгенерируй id
+        # generate patient id
         last_patient = Patient.query.order_by(-Patient.id).first()
-        if last_patient is None:
-            last_id = 1
+        if last_patient is None: # if table Patient is empty
+            last_id = 0
         else:
             last_id = last_patient.id
         form.patient_id.data = f'CRONP-{last_id+1:0>5}'
