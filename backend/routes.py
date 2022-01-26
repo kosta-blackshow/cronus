@@ -1,26 +1,30 @@
 from flask import render_template, flash, redirect, url_for
 from backend import server, db
-from backend.forms import AddCaseForm, OrderCheckForm
+from backend.forms import (
+    OrderCheckForm,
+    CaseForm,
+    AddCaseForm,
+    UpdateCaseForm,
+)
 from backend.models import Patient
 
 
-@server.route('/', methods=['GET'])
+@server.route("/", methods=["GET"])
 def home():
-    form = AddCaseForm()
-    import_form = OrderCheckForm()
+    order_check_form = OrderCheckForm()
+    form = CaseForm()
     return render_template(
-        'add_case.html',
+        "check.html",
+        order_check_form=order_check_form,
         form=form,
-        import_form=import_form,
-        order_title='Check Order ID',
-        case_title='Firstly check order',
+        order_title="Check Order ID",
     )
 
-@server.route('/import_order', methods=['POST'])
+@server.route("/import_order", methods=["POST"])
 def import_order():
     form = AddCaseForm()
-    import_form = OrderCheckForm()
-    if import_form.check_order_id.data and import_form.validate_on_submit():
+    order_check_form = OrderCheckForm()
+    if order_check_form.check_order_id.data and order_check_form.validate_on_submit():
         # 1 - проверка есть ли ордер в базе данных
         # если да - вернуть все данные пациента и кейса
         #         - создать и заполнить форму UpdateCaseFom
@@ -43,17 +47,13 @@ def import_order():
 
     return render_template(
         'add_case.html',
-        form=form,
-        import_form=import_form,
-        order_title='Order ID',
-        case_title='Add case to Cronus database',
+        form=form
     )
 
 
 @server.route('/add_case', methods=['POST'])
 def add_case():
     form = AddCaseForm()
-    import_form = OrderCheckForm()
     if form.submit.data and form.validate_on_submit(): # если все поля заполнены, то добавь в базу
         patient = Patient(
             patient=form.patient_id.data,
@@ -61,13 +61,12 @@ def add_case():
         )
         db.session.add(patient)
         db.session.commit()
-        db.session.close()
+
+        form.patient_id.data = patient.patient
         flash('Patient {} successfully added'.format(form.patient_id.data))
+        return redirect('/')
 
     return render_template(
         'add_case.html',
-        form=form,
-        import_form=import_form,
-        order_title='Order ID',
-        case_title='Add case to Cronus database',
+        form=form
     )

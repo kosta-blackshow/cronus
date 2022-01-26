@@ -1,0 +1,80 @@
+<h2>Case</h2>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.form_field(form.patient_id) }}
+        </div>
+        <div class="col-md-2">
+            {{ wtf.form_field(form.sex) }}
+        </div>
+        <div class="col-md-2">
+            {{ wtf.form_field(form.date_of_birth) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.form_field(form.case_id) }}
+        </div>
+    </div>
+    <h2>Biopsy</h2>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.form_field(form.biopsy_id_1) }}
+        </div>
+        <div class="col-md-2">
+            {{ wtf.form_field(form.tumor_normal_1) }}
+        </div>
+        <div class="col-md-2">
+            {{ wtf.form_field(form.sample_storage_method_1) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.form_field(form.biopsy_id_2) }}
+        </div>
+        <div class="col-md-2">
+            {{ wtf.form_field(form.tumor_normal_2) }}
+        </div>
+        <div class="col-md-2">
+            {{ wtf.form_field(form.sample_storage_method_2) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.form_field(form.tumor_content) }}
+            {{ wtf.form_field(form.ploidy) }}
+            {{ wtf.form_field(form.grade) }}
+            {{ wtf.form_field(form.t_stage) }}
+            {{ wtf.form_field(form.n_stage) }}
+            {{ wtf.form_field(form.m_stage) }}
+            {{ wtf.form_field(form.stage) }}
+            {{ wtf.form_field(form.diagnosis_detailed) }}
+            {{ wtf.form_field(form.dense_subtype) }}
+            {{ wtf.form_field(form.MSI) }}
+            {{ wtf.form_field(form.tumor_mutational_burden) }}
+        </div>
+    </div>
+    <h2>Sequence</h2>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.form_field(form.sequence_id_1) }}
+        </div>
+        <div class="col-md-2">
+            {{ wtf.form_field(form.source_1) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.form_field(form.sequence_id_2) }}
+        </div>
+        <div class="col-md-2">
+            {{ wtf.form_field(form.source_2) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.form_field(form.sequence_id_3) }}
+        </div>
+        <div class="col-md-2">
+            {{ wtf.form_field(form.source_3) }}
+        </div>
+    </div>

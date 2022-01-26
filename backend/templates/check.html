@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block app_content %}
+    <h2>{{ order_title }}</h2>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(
+            order_check_form,
+            action="/import_order",
+            method="post",
+            button_map={order_check_form.check_order_id.name : "primary"}
+            )
+            }}
+        </div>
+    </div>
+
+    {% include '_case_form.html' %}
+
+{% endblock %}

@@ -1,29 +1,22 @@
-{% extends 'base.html' %}
-{% import 'bootstrap/wtf.html' as wtf %}
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block app_content %}
-    <h1>{{ order_title }}</h1>
+<form action="/add_case" method="post" role="form">
+    {{ form.hidden_tag() }}
+    <h2>Order ID</h2>
     <div class="row">
         <div class="col-md-4">
-            {{ wtf.quick_form(
-            import_form,
-            action='/import_order',
-            method="post",
-            button_map={import_form.check_order_id.name : 'primary'}
-            )
-            }}
+            {{ wtf.form_field(form.order_id) }}
         </div>
     </div>
-    <h1>{{ case_title }}</h1>
+
+    {% include '_case_form.html' %}
+
     <div class="row">
         <div class="col-md-4">
-            {{ wtf.quick_form(
-            form,
-            action='/add_case',
-            method="post",
-            button_map={
-            form.submit.name : 'primary'})
-            }}
+            {{ wtf.form_field(form.submit,
+            button_map={form.submit.name : "primary"}) }}
         </div>
     </div>
 {% endblock %}

@@ -12,5 +12,6 @@ db = SQLAlchemy(server, model_class=Base)
 migrate = Migrate(server, db)
 bootstrap = Bootstrap(server)
 
-
+# module level import not at top of file because
+# routes and models import "db" and "server"
 from backend import routes, models
