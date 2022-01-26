@@ -17,7 +17,6 @@ def home():
         "check.html",
         order_check_form=order_check_form,
         form=form,
-        order_title="Check Order ID",
     )
 
 @server.route("/import_order", methods=["POST"])
@@ -46,7 +45,7 @@ def import_order():
         flash(f'Patient ID is generated: {form.patient_id.data}')
 
     return render_template(
-        'add_case.html',
+        'add.html',
         form=form
     )
 
@@ -67,6 +66,6 @@ def add_case():
         return redirect('/')
 
     return render_template(
-        'add_case.html',
+        'add.html',
         form=form
     )

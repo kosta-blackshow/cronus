@@ -4,14 +4,14 @@
 {% block app_content %}
 <form action="/add_case" method="post" role="form">
     {{ form.hidden_tag() }}
-    <h2>Order ID</h2>
+    <h2>Order</h2>
     <div class="row">
         <div class="col-md-4">
             {{ wtf.form_field(form.order_id) }}
         </div>
     </div>
 
-    {% include '_case_form.html' %}
+    {% include '_case.html' %}
 
     <div class="row">
         <div class="col-md-4">
