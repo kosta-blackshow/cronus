@@ -6,7 +6,7 @@ from backend.forms import (
     AddCaseForm,
     UpdateCaseForm,
 )
-from backend.models import Patient, Case
+from backend.models import Patient, Case, Biopsy, Sequence
 
 
 @server.route("/", methods=["GET"])
@@ -67,7 +67,26 @@ def add_case():
 
     return render_template('add.html', form=form)
 
+
 @server.route("/patient_table", methods=["GET"])
 def patient_table():
     patients = Patient.query
-    return render_template("patients_table.html", patients=patients)
+    return render_template("patient_table.html", patients=patients, title="Patient")
+
+
+@server.route("/biopsy_table", methods=["GET"])
+def biopsy_table():
+    biopsies = Biopsy.query
+    return render_template("biopsy_table.html", biopsies=biopsies, title="Biopsy")
+
+
+@server.route("/sequence_table", methods=["GET"])
+def sequence_table():
+    sequences = Sequence.query
+    return render_template("sequence_table.html", sequences=sequences, title="Sequence")
+
+
+@server.route("/case_table", methods=["GET"])
+def case_table():
+    cases = Case.query
+    return render_template("case_table.html", cases=cases, title="Case")

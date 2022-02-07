@@ -63,7 +63,6 @@ class Sequence(Base):
     id = Column(String, primary_key=True)  # pattern = {biopsy.id}-{RNA or DNA}
     biopsy_id = Column(String, ForeignKey("biopsy.id"))
     source = Column(String) # DNA or RNA
-    # array = Column(LargeBinary)
     biopsy = relationship("Biopsy", back_populates="sequence")
     case = relationship("Case", secondary=sequence_case_table, backref="sequence")
 

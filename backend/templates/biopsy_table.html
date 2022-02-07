@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>patient_id</th>
+        <th>tumor_normal</th>
+        <th>sample_storage_method</th>
+        <th>tumor_content</th>
+        <th>ploidy</th>
+        <th>grade</th>
+        <th>t_stage</th>
+        <th>n_stage</th>
+        <th>m_stage</th>
+        <th>stage</th>
+        <th>diagnosis_detailed</th>
+        <th>dense_subtype</th>
+        <th>MSI</th>
+        <th>tumor_mutational_burden</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for biopsy in biopsies %}
+        <tr>
+          <td>{{ biopsy.id }}</td>
+          <td>{{ biopsy.patient_id }}</td>
+          <td>{{ biopsy.sample_storage_method }}</td>
+          <td>{{ biopsy.tumor_content }}</td>
+          <td>{{ biopsy.ploidy }}</td>
+          <td>{{ biopsy.grade }}</td>
+          <td>{{ biopsy.t_stage }}</td>
+          <td>{{ biopsy.n_stage }}</td>
+          <td>{{ biopsy.m_stage }}</td>
+          <td>{{ biopsy.stage }}</td>
+          <td>{{ biopsy.diagnosis_detailed }}</td>
+          <td>{{ biopsy.dense_subtype }}</td>
+          <td>{{ biopsy.MSI }}</td>
+          <td>{{ biopsy.tumor_mutational_burden }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block table_scripts %}
+  <script>
+    $(document).ready(function () {
+      $('#data').DataTable({
+        columns: [
+          null,
+          null,
+          {orderable: false},
+          {orderable: false, searchable: false},
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null],
+      });
+    });
+  </script>
+{% endblock %}

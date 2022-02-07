@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>patient_id</th>
+        <th>order_id</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for case in cases %}
+        <tr>
+          <td>{{ case.id }}</td>
+          <td>{{ case.patient_id }}</td>
+          <td>{{ case.order_id }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block table_scripts %}
+  <script>
+    $(document).ready(function () {
+      $('#data').DataTable({
+        columns: [
+          null,
+          {orderable: false},
+          null],
+      });
+    });
+  </script>
+{% endblock %}
