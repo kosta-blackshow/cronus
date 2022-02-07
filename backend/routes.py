@@ -6,11 +6,12 @@ from backend.forms import (
     AddCaseForm,
     UpdateCaseForm,
 )
-from backend.models import Patient
+from backend.models import Patient, Case
 
 
 @server.route("/", methods=["GET"])
-def home():
+@server.route("/index", methods=["GET"])
+def index():
     order_check_form = OrderCheckForm()
     form = CaseForm()
     return render_template(
@@ -41,31 +42,32 @@ def import_order():
             last_id = 0
         else:
             last_id = last_patient.id
-        form.patient_id.data = f'CRONP-{last_id+1:0>5}'
-        flash(f'Patient ID is generated: {form.patient_id.data}')
+        form.patient_id.data = f"CRONP-{last_id+1:0>5}"
+        flash(f"Patient ID is generated: {form.patient_id.data}")
 
-    return render_template(
-        'add.html',
-        form=form
-    )
+    return render_template("add.html", form=form)
 
 
-@server.route('/add_case', methods=['POST'])
+@server.route("/add_case", methods=["POST"])
 def add_case():
     form = AddCaseForm()
     if form.submit.data and form.validate_on_submit(): # если все поля заполнены, то добавь в базу
         patient = Patient(
             patient=form.patient_id.data,
             sex=form.sex.data,
+            date_of_birth=form.date_of_birth.data
         )
+
         db.session.add(patient)
         db.session.commit()
 
         form.patient_id.data = patient.patient
-        flash('Patient {} successfully added'.format(form.patient_id.data))
+        flash(f"Patient {form.patient_id.data} successfully added")
         return redirect('/')
 
-    return render_template(
-        'add.html',
-        form=form
-    )
+    return render_template('add.html', form=form)
+
+@server.route("/patient_table", methods=["GET"])
+def patient_table():
+    patients = Patient.query
+    return render_template("patients_table.html", patients=patients)

@@ -28,7 +28,7 @@ class CaseForm(FlaskForm):
     # biopsy information
     biopsy_id_1 = StringField("Biopsy ID")
     tumor_normal_1 = SelectField(
-        "Tumor (T) of normal (N)",
+        "Tumor (T) or normal (N)",
         choices=[None, "T", "N"],
         default=None,
         validators=[DataRequired()],
@@ -41,7 +41,7 @@ class CaseForm(FlaskForm):
     )
     biopsy_id_2 = StringField("Biopsy ID")
     tumor_normal_2 = SelectField(
-        "Tumor (T) of normal (N)",
+        "Tumor (T) or normal (N)",
         choices=[None, "T", "N"],
         default=None,
         validators=[DataRequired()],
