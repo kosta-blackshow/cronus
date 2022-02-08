@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>case_id</th>
+        <th>patient_id</th>
+        <th>order_id</th>
+        <th>tumor_normal</th>
+        <th>source</th>
+        <th>sample_storage_method</th>
+        <th>diagnosis_detailed</th>
+        <th>t_stage</th>
+        <th>n_stage</th>
+        <th>m_stage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for result in results %}
+        <tr>
+          <td>{{ result.case_id }}</td>
+          <td>{{ result.patient_id }}</td>
+          <td>{{ result.order_id }}</td>
+          <td>{{ result.tumor_normal }}</td>
+          <td>{{ result.source }}</td>
+          <td>{{ result.sample_storage_method }}</td>
+          <td>{{ result.diagnosis_detailed }}</td>
+          <td>{{ result.t_stage }}</td>
+          <td>{{ result.n_stage }}</td>
+          <td>{{ result.m_stage }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block table_scripts %}
+  <script>
+    $(document).ready(function () {
+      $('#data').DataTable({
+        columns: [
+          null,
+          null,
+          null,
+          {orderable: false},
+          {orderable: false, searchable: false},
+          null,
+          null,
+          null,
+          null,
+          null],
+      });
+    });
+  </script>
+{% endblock %}

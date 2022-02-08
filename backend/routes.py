@@ -1,10 +1,10 @@
 from flask import render_template, flash, redirect, url_for
+import sqlalchemy as sa
 from backend import server, db
 from backend.forms import (
     OrderCheckForm,
     CaseForm,
-    AddCaseForm,
-    UpdateCaseForm,
+    AddCaseForm
 )
 from backend.models import Patient, Case, Biopsy, Sequence
 
@@ -68,25 +68,66 @@ def add_case():
     return render_template('add.html', form=form)
 
 
-@server.route("/patient_table", methods=["GET"])
-def patient_table():
+@server.route("/table_patient", methods=["GET"])
+def table_patient():
     patients = Patient.query
-    return render_template("patient_table.html", patients=patients, title="Patient")
+    return render_template("table_patient.html", patients=patients, title="Patient")
 
 
-@server.route("/biopsy_table", methods=["GET"])
-def biopsy_table():
+@server.route("/table_biopsy", methods=["GET"])
+def table_biopsy():
     biopsies = Biopsy.query
-    return render_template("biopsy_table.html", biopsies=biopsies, title="Biopsy")
+    return render_template("table_biopsy.html", biopsies=biopsies, title="Biopsy")
 
 
-@server.route("/sequence_table", methods=["GET"])
-def sequence_table():
+@server.route("/table_sequence", methods=["GET"])
+def table_sequence():
     sequences = Sequence.query
-    return render_template("sequence_table.html", sequences=sequences, title="Sequence")
+    return render_template("table_sequence.html", sequences=sequences, title="Sequence")
 
 
-@server.route("/case_table", methods=["GET"])
-def case_table():
+@server.route("/table_case", methods=["GET"])
+def table_case():
     cases = Case.query
-    return render_template("case_table.html", cases=cases, title="Case")
+    return render_template("table_case.html", cases=cases, title="Case")
+
+
+@server.route("/table_combined", methods=["GET"])
+def table_combined():
+    query = sa \
+        .select([
+        Case.id.label("case_id"),
+        Patient.patient.label("patient_id"),
+        Case.order_id,
+        Biopsy.tumor_normal,
+        Sequence.source,
+        Biopsy.sample_storage_method,
+        Biopsy.diagnosis_detailed,
+        # Biopsy.tumor_content,
+        # Biopsy.ploidy,
+        # Biopsy.grade,
+        Biopsy.t_stage,
+        Biopsy.n_stage,
+        Biopsy.m_stage,
+        # Biopsy.stage,
+        # Biopsy.dense_subtype,
+        # Biopsy.MSI,
+        # Biopsy.tumor_mutational_burden,
+    ]) \
+        .join(Patient, Case.patient) \
+        .join(Sequence, Case.sequence) \
+        .join(Biopsy, Sequence.biopsy) \
+        .order_by(                       # сортировка и выбор строк
+            Case.id.asc(),               # 1. чтобы образцы шли по порядку
+            Biopsy.tumor_normal.desc(),  # 2. Tumor окажется выше Normal
+            Sequence.source.asc()        # 3. DNA окажется выше RNA
+    ) \
+        .distinct(Case.id)               # 4. Выбирается единственная строка из возможных по case_id
+
+    # таким образом строки выбираются по приоритету:
+    # 1. Tumor biopsy and DNA sequencing
+    # 2. Tumor RNA
+    # 3. Normal DNA
+    # 4. Normal RNA
+    results = db.session.execute(query)
+    return render_template("table_combined.html", results=results, title="Case")

@@ -26,6 +26,7 @@
         <tr>
           <td>{{ biopsy.id }}</td>
           <td>{{ biopsy.patient_id }}</td>
+          <td>{{ biopsy.tumor_normal }}</td>
           <td>{{ biopsy.sample_storage_method }}</td>
           <td>{{ biopsy.tumor_content }}</td>
           <td>{{ biopsy.ploidy }}</td>
@@ -49,6 +50,7 @@
     $(document).ready(function () {
       $('#data').DataTable({
         columns: [
+          null,
           null,
           null,
           {orderable: false},
